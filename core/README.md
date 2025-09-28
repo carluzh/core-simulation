@@ -21,12 +21,6 @@ This folder contains the foundational building blocks for AMM simulations. These
   - `calculate_fee_adjustment()`: Core fee adjustment logic
 - **Parameters**: 8 tunable parameters (linear_slope, alpha, max_fee_delta, etc.)
 
-### `cpmm_engine.py`
-- **Purpose**: Low-level CPMM calculations and arbitrage
-- **Key Functions**:
-  - `generate_cex_price()`: Generate price series
-  - `arb_trade_single()`: Calculate arbitrage volumes
-  - `run_daily_trading()`: Execute daily trading simulation
 
 ### `trader_agents.py`
 - **Purpose**: Trader behavior modeling
@@ -39,25 +33,27 @@ This folder contains the foundational building blocks for AMM simulations. These
   - Execution evaluation
   - Pool selection logic
 
-### `lp_actors.py`
+### `lp_agents.py`
 - **Purpose**: LP behavior modeling
 - **Key Classes**:
-  - `LPPreferences`: LP decision parameters
-  - `PoolState`: Current pool metrics
-- **LP Types**: Passive, Active, Algorithmic
+  - `LPAgent`: Base LP with switching logic
+  - `LPProfile`: LP preference parameters
+- **LP Types**: Passive, Active
 - **Key Features**:
-  - Capital allocation decisions
-  - Risk tolerance modeling
-  - Rebalancing logic
+  - Pool switching decisions
+  - Capital allocation
+  - APR-based evaluation
 
 ## Usage
 
 These components are imported by simulations:
 
 ```python
-from core.amm_pool import AMMPool, get_all_quotes
-from core.dynamic_fee_engine import initialize_dynamic_fee_state
+from core.amm_pool import AMMPool
+from core.dynamic_fee_engine import calculate_dynamic_fee, initialize_dynamic_fee_state
 from core.trader_agents import create_trader_population
+from core.lp_agents import create_lp_population
+from core.cex_arbitrage import calculate_arbitrage_volume
 ```
 
 ## Design Principles
